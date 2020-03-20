@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+ <head>
+   <meta charset="utf-8">
+   <title>Corono Page</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
+ </head>
+ <body>
+    <header>
+      <div class="container">
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('index') }}">CoronaHelpFinder</a></li>
+            <li><a href="{{ url_for('employees') }}">Employee</a></li>
+            <li><a href="{{ url_for('employers') }}">Employers</a></li>
+            <li><a href="{{ url_for('offers') }}">Offers</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+ </body>
+</html>
