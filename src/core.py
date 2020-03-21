@@ -63,3 +63,16 @@ def get_employers(employer_id=None):
         requested employers
     """
     return []
+
+def find_matches(employee, employer, employee_id=None, employer_id=None):
+    """finds matches for skills needed and skills on offer
+    
+    Args:
+        employee ([dataframe]): [dataframe for the employees who need jobs]
+        employer ([dataframe]): [dataframe for the employers who need people]
+        employee_id (string): employee_id by which to filter,- optional
+        employer_id (string): employer_id by which to filer,- optional
+    """
+
+    #you can compare the lists in the skills column, and use that to decide what people match what jobs
+    
