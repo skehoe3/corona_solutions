@@ -30,7 +30,7 @@ def get_offers(offer_id=None):
     """
     
     if offer_id:
-        filtered = offers['email']== offer_id
+        filtered = offers[offers['email']== offer_id]
         html_table = filtered.to_html()
         return html_table
     html_table = offers.to_html()
@@ -121,6 +121,8 @@ def find_matches(employee, employer, employee_id=None, employer_id=None):
     merged_data = employer.merge(employee, left_on=skills, right_on=skills, )
     #print(merged_data.columns)
     subs_data = merged_data[['First Name:_x', "Last Name:_x", "Zip Code_y", "Email_y", "Phone number_y", "I have a car:_y", "From:_y", "From:_y", "Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]]
+    subs_data = subs_data[[]]
+    
     return subs_data
 
 
