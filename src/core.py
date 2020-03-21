@@ -5,8 +5,9 @@ Author:	Gerrit Lang
 Core functionality of this service
 """
 from geopy import distance
-from geopy.geocoders import Nominatim, get_geocoder_for_service
+from geopy.geocoders import Nominatim
 from src.spreadsheet import get_sheet_data, transform_to_dict_list
+
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
@@ -45,8 +46,13 @@ def get_employees(employee_id=None):
     Returns:
         requested employees
     """
+    #
     result = get_sheet_data(sheetname='employee',datarange='A:M')
-    return transform_to_dict_list(result, employee_id)
+    employee = transform_to_dict_list(result, employee_id)
+    # insert_employee(employee_id)
+    print(employee)
+    return employee
+
 
 
 def get_employers(employer_id=None):

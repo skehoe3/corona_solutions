@@ -8,6 +8,7 @@ Main App with all Endpoints
 
 from flask import Flask, request, flash, redirect, jsonify, render_template
 import src.core as Core
+import src.pymongo as db
 from src.forms.offer import OfferForm
 
 # pylint: disable=invalid-name
@@ -88,4 +89,5 @@ def employers(employer_id=None):
 
 
 if __name__ == "__main__":
+    db.startup()
     app.run()
