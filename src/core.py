@@ -7,10 +7,12 @@ Core functionality of this service
 import pandas as pd
 from geopy import distance
 from geopy.geocoders import Nominatim, get_geocoder_for_service
+import numpy as np
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
 offers = pd.read_csv("Employee - Form Responses 1.csv", sep=",")
+skills = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 
 def get_offers(offer_id=None):
     """
@@ -66,6 +68,20 @@ def get_employers(employer_id=None):
     """
     return []
 
+#skills = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
+def build_columns(df, skills):
+    """[summary]
+    
+    Args:
+        df ([dataframe]): [dataframe from the employee/employer forms]
+        skills ([type]): [list of all possible skills that we could need]
+    """
+
+    for i in skills:
+        df[i] = np.where(i in df['Please select'], 1, 0)
+
+    return df
+
 def find_matches(employee, employer, employee_id=None, employer_id=None):
     """finds matches for skills needed and skills on offer
     
@@ -77,6 +93,9 @@ def find_matches(employee, employer, employee_id=None, employer_id=None):
     """
 
     #you can compare the lists in the skills column, and use that to decide what people match what jobs
+    cols_employee = build_columns(employee, skills)
+    cols_employer = build_columns(employer, skills)
+
     
 
 
