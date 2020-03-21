@@ -4,7 +4,6 @@ pymongo
 pandas
 matplotlib
 geopy
-pymongo
 
 google-api-python-client
 google-auth-httplib2 
