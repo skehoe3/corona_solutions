@@ -72,7 +72,6 @@ def get_employers(employer_id=None):
     """
     return []
 
-#skills = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 def compare_lists(a, b):
     """[summary]
     
@@ -82,6 +81,7 @@ def compare_lists(a, b):
     """
 
     c = [x for x in a if x in a and x in b]
+
 
     return c
 
@@ -94,8 +94,7 @@ def find_matches(employee, employer, employee_id=None, employer_id=None):
         employee_id (string): employee_id by which to filter,- optional
         employer_id (string): employer_id by which to filer,- optional
     """
-    employer['intersection'] = employer['Please select'].apply(compare_lists, b=employee["Please select"])
-    #print(employee["Please select"] == employee['Please select'])
+    employer['intersection'] = employer[['Please select']].apply(compare_lists, b=employee["Please select"])
     return employer
 
 
