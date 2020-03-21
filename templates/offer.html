@@ -3,15 +3,8 @@
 {% block content %}
 <h1>Offers</h1>
 <div>
-    {% if offers %}
-        <table class="blueTable">
-            <thead>
-                <th>Offer Name</th>
-            </thead>
-            {% for offer in offers %}
-                <tr><td>{{ offer }}</td></tr>
-            {% endfor %}
-        </table>
+    {% if offer_table %}
+       {{ offer_table|safe }}
     {% endif %}
 </div>
 <div>

@@ -4,10 +4,11 @@ Author:	Gerrit Lang
 
 Core functionality of this service
 """
+import pandas as pd
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
-
+offers = pd.read_csv("Employee - Form Responses 1.csv", sep=",")
 
 def get_offers(offer_id=None):
     """
@@ -19,8 +20,14 @@ def get_offers(offer_id=None):
     Returns:
         requested offers
     """
-    return TEST
-
+    
+    if offer_id:
+        filtered = offers['email']== offer_id
+        html_table = filtered.to_html()
+        return html_table
+    html_table = offers.to_html()
+    return html_table
+    
 
 def create_offer(offer):
     """

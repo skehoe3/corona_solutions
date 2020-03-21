@@ -47,7 +47,7 @@ def offers(offer_id=None):
         if offer_id:
             return jsonify(Core.get_offers(offer_id))
         else:
-            return render_template("offer.html", offers=Core.get_offers(), form=form)
+            return render_template("offer.html", offer_table=Core.get_offers(), form=form)
     return "Not implemented"
 
 
