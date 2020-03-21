@@ -5,7 +5,7 @@ Author:	Gerrit Lang
 Core functionality of this service
 """
 from geopy import distance
-from geopy.geocoders import Nominatim, get_geocoder_for_service
+from geopy.geocoders import Nominatim
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
