@@ -12,7 +12,7 @@ import numpy as np
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
 offers = pd.read_csv("employee.csv", sep=",")
-skills = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
+SKILLS = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 
 #pandas settings
 pd.set_option('display.max_columns', None)  # or 1000
@@ -94,17 +94,18 @@ def build_columns(employer, employee):
     """
     #convert to string
     employer['Please select'] = employer['Please select'].str.replace('"', '')
-    employer["fixed_skills"] = employer['Please select'].str.split(',')
+    employer["fixed_skills"] = employer['Please select'].str.split(', ')
 
     employee['Please select'] = employee['Please select'].str.replace('"', '')
-    employee["fixed_skills"] = employee['Please select'].str.split(',')
+    employee["fixed_skills"] = employee['Please select'].str.split(', ')
 
-    for i in skills:
-        employer[i] = np.where(employer['fixed_skills']== i, 1, 0)
-        employee[i] = np.where(employee['fixed_skills'] == i, 1, 0)
-
+    for i in SKILLS:
+        
+        employer[i] = np.isin(employer["fixed_skills"], list(i))
+        employee[i] = np.isin(employer["fixed_skills"], list(i))
 
     return employer, employee
+
 
 def find_matches(employee, employer, employee_id=None, employer_id=None):
     """finds matches for skills needed and skills on offer
@@ -115,15 +116,12 @@ def find_matches(employee, employer, employee_id=None, employer_id=None):
         employee_id (string): employee_id by which to filter,- optional
         employer_id (string): employer_id by which to filer,- optional
     """
-    #employer['intersection'] = employer[['Please select']].apply(compare_lists, b=employee["Please select"])
-    # we need a left join with a group by emplpyer.email
-    employer, employee = build_columns(employer, employee)
-    merged_data = employer.merge(employee, left_on=skills, right_on=skills, )
-    #print(merged_data.columns)
-    subs_data = merged_data[['First Name:_x', "Last Name:_x", "Zip Code_y", "Email_y", "Phone number_y", "I have a car:_y", "From:_y", "From:_y", "Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]]
-    subs_data = subs_data[[]]
+    d = {'test': ['Re-Stock shelves', '2', "3"] }
+    # do this for everthing in the incoming arrays
+    result = {x: 1 if x in d['test'] else 0 for x in SKILLS }
     
-    return subs_data
+   
+    return matches_found
 
 
 def find_on_osm(address):
