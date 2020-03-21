@@ -6,7 +6,7 @@ Core functionality of this service
 """
 from geopy import distance
 from geopy.geocoders import Nominatim, get_geocoder_for_service
-from src.spreadsheet import get_sheet_data
+from src.spreadsheet import get_sheet_data, transform_to_dict_list
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
@@ -46,9 +46,7 @@ def get_employees(employee_id=None):
         requested employees
     """
     result = get_sheet_data(sheetname='employee',datarange='A:M')
-    #TODO: Filter by given id!
-    #TODO: In what format should the data be returned?
-    return result
+    return transform_to_dict_list(result, employee_id)
 
 
 def get_employers(employer_id=None):
@@ -62,9 +60,7 @@ def get_employers(employer_id=None):
         requested employers
     """
     result = get_sheet_data(sheetname='employer',datarange='A:M')
-    #TODO: Filter by given id!
-    #TODO: In what format should the data be returned?
-    return result
+    return transform_to_dict_list(result, employer_id)
 
 
 def find_on_osm(address):

@@ -58,3 +58,26 @@ def get_sheet_data(sheetname, datarange='A:M'):
                                 range=datarange).execute()
     values = result.get('values', [])
     return values
+
+
+def transform_to_dict_list(inputlist, filterid=None):
+    """
+    returns a list of dictionaries from given list, filtered by ID
+
+    Args:
+        input_list (list(list(str))): list of string lists, where the first list holds the keys for the dictionary to be constructed
+        filter (str): ID to be filtered by. If present, list will only contain one dict where ID is given ID
+
+    Returns:
+        list of dictionaires containing the data from the list
+    """
+    outputlist = []
+    keys = inputlist[0]
+    for x in range(1, len(inputlist)):
+        if not filterid:
+            outputlist.append(dict(zip(keys, inputlist[x])))
+            continue
+        if inputlist[x][0] == filterid:
+            outputlist.append(dict(zip(keys, inputlist[x])))
+            break
+    return outputlist
