@@ -88,43 +88,66 @@ def compare_lists(a, b):
 
     return c
 
-def build_columns(employer, employee):
-    """[summary]
+# def build_columns(employer, employee):
+#     """[summary]
     
-    Args:
-        df ([dataframe]): [dataframe from the employee/employer forms]
-        skills ([type]): [list of all possible skills that we could need]
-    """
-    #convert to string
-    employer['Please select'] = employer['Please select'].str.replace('"', '')
-    employer["fixed_skills"] = employer['Please select'].str.split(', ')
+#     Args:
+#         df ([dataframe]): [dataframe from the employee/employer forms]
+#         skills ([type]): [list of all possible skills that we could need]
+#     """
+#     #convert to string
+#     employer['Please select'] = employer['Please select'].str.replace('"', '')
+#     employer["fixed_skills"] = employer['Please select'].str.split(', ')
 
-    employee['Please select'] = employee['Please select'].str.replace('"', '')
-    employee["fixed_skills"] = employee['Please select'].str.split(', ')
+#     employee['Please select'] = employee['Please select'].str.replace('"', '')
+#     employee["fixed_skills"] = employee['Please select'].str.split(', ')
 
-    for i in SKILLS:
+#     for i in SKILLS:
         
-        employer[i] = np.isin(employer["fixed_skills"], list(i))
-        employee[i] = np.isin(employer["fixed_skills"], list(i))
+#         employer[i] = np.isin(employer["fixed_skills"], list(i))
+#         employee[i] = np.isin(employer["fixed_skills"], list(i))
 
-    return employer, employee
+#     return employer, employee
 
 
-def find_matches(employee, employer, employee_id=None, employer_id=None):
+def find_matches(employee_id=None, employer_id=None):
     """finds matches for skills needed and skills on offer
     
     Args:
-        employee ([dataframe]): [dataframe for the employees who need jobs]
-        employer ([dataframe]): [dataframe for the employers who need people]
-        employee_id (string): employee_id by which to filter,- optional
-        employer_id (string): employer_id by which to filer,- optional
+        .
+    Returns:
+        employee_matches: which employers each employee matches with
+        employer_matches: which employeees each employer matches with
     """
-    d = {'test': ['Re-Stock shelves', '2', "3"] }
+    #d = {'test': ['Re-Stock shelves', '2', "3"] }
     # do this for everthing in the incoming arrays
-    result = {x: 1 if x in d['test'] else 0 for x in SKILLS }
+    #result = {x: 1 if x in d['test'] else 0 for x in SKILLS }
+
+    #
+    employers = get_employers()
+    employees = get_employees()
+
+    # only employees can list more than one skill, so no need for a second loop
+    # for employers
+    for i in range(0, len(employees)): #this is a list
+        #print(employees[i]["Skills"])
+        employees[i]["Skills"] = employees[i]["Skills"].split(', ')
     
-   
-    return matches_found
+    employer_matches = []
+    for i in range(0, len(employers)):
+        for x in range(0, len(employees)):
+            if employers[i]['Skills'] in employees[x]["Skills"]:
+                employer_matches.append({employers[i]['ID']: employees[x]})
+
+    # employee_matches = []
+    # for i in range(0, len(employees)):
+    #     for x in range(0, len(employers)):
+    #         if employers[x]['Skills'] in employees[i]["Skills"]:
+    #             employee_matches.append({employers[i]['ID']: employees[x]})
+    # #employee_matches = [x== 1 if x in employees['Skills'] else 0 for x in SKILLS ]
+    # #employer_matches = [x== 1 if x in employers['Skills'] else 0 for x in SKILLS ]
+
+    return employer_matches
 
 
 def find_on_osm(address):
