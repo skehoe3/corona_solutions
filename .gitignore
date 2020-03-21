@@ -2,3 +2,4 @@ venv
 *.pyc
 *.csv
 test.py
+settings.json
