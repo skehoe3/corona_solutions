@@ -1,6 +1,7 @@
 flask
 flask-wtf
 pymongo
+geopy
 
 google-api-python-client
 google-auth-httplib2 
