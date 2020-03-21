@@ -116,7 +116,7 @@ def find_matches(employee_id=None, employer_id=None):
     for i in range(0, len(employers)):
         for x in range(0, len(employees)):
             if employers[i]['Skills'] in employees[x]["Skills"]:
-
+                employer_matches.append({employers[i]['ID']: employees[x]})
     return employer_matches
 
 
