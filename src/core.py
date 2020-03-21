@@ -94,8 +94,8 @@ def find_matches(employee, employer, employee_id=None, employer_id=None):
         employee_id (string): employee_id by which to filter,- optional
         employer_id (string): employer_id by which to filer,- optional
     """
-    employer['intersection'] = employer['Please select'].apply(compare_lists, b=employee)
-
+    employer['intersection'] = employer['Please select'].apply(compare_lists, b=employee["Please select"])
+    #print(employee["Please select"] == employee['Please select'])
     return employer
 
 
