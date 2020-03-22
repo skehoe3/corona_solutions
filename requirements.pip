@@ -1,6 +1,8 @@
 flask
 flask-wtf
 pymongo
+pandas
+matplotlib
 geopy
 
 google-api-python-client

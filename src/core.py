@@ -4,13 +4,20 @@ Author:	Gerrit Lang
 
 Core functionality of this service
 """
+import pandas as pd
 from geopy import distance
 from geopy.geocoders import Nominatim, get_geocoder_for_service
+import numpy as np
 from src.spreadsheet import get_sheet_data, transform_to_dict_list
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
+offers = pd.read_csv("employee.csv", sep=",")
+SKILLS = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 
+#pandas settings
+pd.set_option('display.max_columns', None)  # or 1000
+pd.set_option('display.max_rows', None)  # or 1000
 
 def get_offers(offer_id=None):
     """
@@ -22,8 +29,14 @@ def get_offers(offer_id=None):
     Returns:
         requested offers
     """
-    return TEST
-
+    
+    if offer_id:
+        filtered = offers[offers['email']== offer_id]
+        html_table = filtered.to_html()
+        return html_table
+    html_table = offers.to_html()
+    return html_table
+    
 
 def create_offer(offer):
     """
@@ -61,6 +74,50 @@ def get_employers(employer_id=None):
     """
     result = get_sheet_data(sheetname='employer',datarange='A:M')
     return transform_to_dict_list(result, employer_id)
+
+def compare_lists(a, b):
+    """[summary]
+    
+    Args:
+        df ([dataframe]): [dataframe from the employee/employer forms]
+        skills ([type]): [list of all possible skills that we could need]
+    """
+
+    c = [x for x in a if x in a and x in b]
+
+
+    return c
+
+
+def find_matches(employee_id=None, employer_id=None):
+    """finds matches for skills needed and skills on offer
+    
+    Args:
+        .
+    Returns:
+        employee_matches: which employers each employee matches with
+        employer_matches: which employeees each employer matches with
+    """
+    #d = {'test': ['Re-Stock shelves', '2', "3"] }
+    # do this for everthing in the incoming arrays
+    #result = {x: 1 if x in d['test'] else 0 for x in SKILLS }
+
+    #
+    employers = get_employers()
+    employees = get_employees()
+
+    # only employees can list more than one skill, so no need for a second loop
+    # for employers
+    for i in range(0, len(employees)): #this is a list
+        #print(employees[i]["Skills"])
+        employees[i]["Skills"] = employees[i]["Skills"].split(', ')
+    
+    employer_matches = []
+    for i in range(0, len(employers)):
+        for x in range(0, len(employees)):
+            if employers[i]['Skills'] in employees[x]["Skills"]:
+                employer_matches.append({employers[i]['ID']: employees[x]})
+    return employer_matches
 
 
 def find_on_osm(address):
