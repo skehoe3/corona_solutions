@@ -40,14 +40,24 @@ def offers(offer_id=None):
     """
     form = OfferForm()
     if form.validate_on_submit():
-        flash("Offer created: {}".format(form.title.data))
-        Core.create_offer(form.title.data)
-        return redirect("/offers")
+        return render_template(
+            "offer.html",
+            offer_table=Core.get_matches(form.title.data),
+            form=form,
+            offer_id=form.title.data,
+        )
     if request.method == "GET":
         if offer_id:
-            return jsonify(Core.get_matches(offer_id))
+            return render_template(
+                "offer.html",
+                offer_table=Core.get_matches(offer_id),
+                form=form,
+                offer_id=offer_id,
+            )
         else:
-            return render_template("offer.html", offer_table=Core.get_matches('1'), form=form)
+            return render_template(
+                "offer.html", offer_table=Core.get_matches("1"), form=form, offer_id=1,
+            )
     return "Not implemented"
 
 

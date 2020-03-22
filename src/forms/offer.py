@@ -15,5 +15,5 @@ class OfferForm(FlaskForm):
     Form for our offer page
     """
 
-    title = StringField("Title", validators=[DataRequired()])
-    submit = SubmitField("Create")
+    title = StringField("Employee Id", validators=[DataRequired()])
+    submit = SubmitField("Get Matches")
