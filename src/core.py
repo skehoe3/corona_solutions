@@ -93,7 +93,7 @@ def compare_lists(a, b):
     return c
 
 
-def find_matches(employee_id=None):
+def get_matches(employee_id=None):
     """finds matches for skills needed and skills on offer
     
     Args:
@@ -123,8 +123,9 @@ def find_matches(employee_id=None):
         if employer['Skills'] in employees["Skills"] and employer['Zip Code'] == employees['Zip Code'] and er_from >= ee_from and er_to <= ee_to:
                 employer_matches.append({'Employer Email': employer['Email'], 'First Name':employer['First Name'], 'Last Name':employer['Last Name'], 'Phone Number':employer['Phone number'], 'Skills':employer['Skills'], 'To': str(er_to), 'From': str(er_from)})
         
-            
-    return employer_matches
+    df = pd.DataFrame(employer_matches)
+
+    return df.to_html()
 
 
 def find_on_osm(address):

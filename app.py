@@ -45,9 +45,9 @@ def offers(offer_id=None):
         return redirect("/offers")
     if request.method == "GET":
         if offer_id:
-            return jsonify(Core.get_offers(offer_id))
+            return jsonify(Core.get_matches(offer_id))
         else:
-            return render_template("offer.html", offer_table=Core.get_offers(), form=form)
+            return render_template("offer.html", offer_table=Core.get_matches('1'), form=form)
     return "Not implemented"
 
 
