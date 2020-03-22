@@ -7,6 +7,7 @@ Core functionality of this service
 from geopy import distance
 from geopy.geocoders import Nominatim
 from src.spreadsheet import get_sheet_data, transform_to_dict_list
+from src import pymongo
 
 
 # Just for my test
@@ -46,11 +47,8 @@ def get_employees(employee_id=None):
     Returns:
         requested employees
     """
-    #
-    result = get_sheet_data(sheetname='employee',datarange='A:M')
-    employee = transform_to_dict_list(result, employee_id)
-    # insert_employee(employee_id)
-    print(employee)
+    pymongo.update_employees()
+    employee = pymongo.get_employees(employee_id)
     return employee
 
 
@@ -65,8 +63,9 @@ def get_employers(employer_id=None):
     Returns:
         requested employers
     """
-    result = get_sheet_data(sheetname='employer',datarange='A:M')
-    return transform_to_dict_list(result, employer_id)
+    pymongo.update_employers()
+    employer = pymongo.get_employeer(employer_id)
+    return employer
 
 
 def find_on_osm(address):
