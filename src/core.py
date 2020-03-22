@@ -116,7 +116,13 @@ def find_matches(employee_id=None, employer_id=None):
     for i in range(0, len(employers)):
         for x in range(0, len(employees)):
             if employers[i]['Skills'] in employees[x]["Skills"]:
-                employer_matches.append({employers[i]['ID']: employees[x]})
+            # collection section
+                employer_matches.append({employers[i]['Email']: employees[x]})
+                #TODO: add time match component
+                #TODO: add location
+            # filter out to only info from employee that we want: first name, name, email, phone, skills, availabilitiy
+
+            #{'email_employer': [firstname: "", lastname: "", email:'', phone:'', skills: '', availability:'']}
     return employer_matches
 
 
