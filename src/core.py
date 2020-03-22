@@ -109,20 +109,24 @@ def find_matches(employee_id=None, employer_id=None):
     # only employees can list more than one skill, so no need for a second loop
     # for employers
     for i in range(0, len(employees)): #this is a list
-        #print(employees[i]["Skills"])
         employees[i]["Skills"] = employees[i]["Skills"].split(', ')
     
     employer_matches = []
     for i in range(0, len(employers)):
+        #convert timestamp of employer
+        er_from = employers[i]['From']
+        er_to = employers[i]['To']
         for x in range(0, len(employees)):
-            if employers[i]['Skills'] in employees[x]["Skills"]:
+            ee_from = employees[x]['From']
+            ee_to = employees[x]['To']
+            print(type(ee_to))
+            if employers[i]['Skills'] in employees[x]["Skills"] and employers[i]['Zip Code'] == employees[i]['Zip Code']:
+                # convert timestamp of employee
             # collection section
-                employer_matches.append({employers[i]['Email']: employees[x]})
+                employer_matches.append([employers[i]['Email'], employees[x]['First Name'], employees[x]['Last Name'], employees[x]['Email'], employees[x]['Phone number'], employees[x]['Skills', employees[x]['Availability']]])
                 #TODO: add time match component
-                #TODO: add location
-            # filter out to only info from employee that we want: first name, name, email, phone, skills, availabilitiy
 
-            #{'email_employer': [firstname: "", lastname: "", email:'', phone:'', skills: '', availability:'']}
+            #{'email_employer': {firstname: "", lastname: "", email:'', phone:'', skills: '', availability:''}}
     return employer_matches
 
 
