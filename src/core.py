@@ -62,7 +62,7 @@ def get_employees(employee_id=None):
     Returns:
         requested employees
     """
-    result = get_sheet_data(sheetname='employee',datarange='A:M')
+    result = get_sheet_data(sheetname='employee',datarange='A:N')
     return transform_to_dict_list(result, employee_id)
 
 
@@ -76,7 +76,7 @@ def get_employers(employer_id=None):
     Returns:
         requested employers
     """
-    result = get_sheet_data(sheetname='employer',datarange='A:M')
+    result = get_sheet_data(sheetname='employer',datarange='A:N')
     return transform_to_dict_list(result, employer_id)
 
 def compare_lists(a, b):
@@ -120,8 +120,8 @@ def get_matches(employee_id=None):
         er_from = parser.parse(employer['From'])
         er_to = parser.parse(employer['To'])
 
-        if employer['Skills'] in employees["Skills"] and employer['Zip Code'] == employees['Zip Code'] and er_from >= ee_from and er_to <= ee_to:
-                employer_matches.append({'Employer Email': employer['Email'], 'First Name':employer['First Name'], 'Last Name':employer['Last Name'], 'Phone Number':employer['Phone number'], 'Skills':employer['Skills'], 'To': str(er_to), 'From': str(er_from)})
+        if employer['Skills'] in employees['Skills'] and employer['Zip Code'] == employees['Zip Code'] and er_from >= ee_from and er_to <= ee_to:
+                employer_matches.append({'Employer Email': employer.get('Email',''), 'First Name':employer.get('First Name',''), 'Last Name':employer.get('Last Name',''), 'Company':employer.get('Company',''), 'Phone Number':employer.get('Phone number',''), 'Skills':employer.get('Skills',''), 'From': str(er_from), 'To': str(er_to), 'Comments':employer.get('Comments','')})
         
     df = pd.DataFrame(employer_matches)
 
