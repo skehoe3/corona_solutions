@@ -21,9 +21,13 @@ def update_employees():
     """
     update DB with the spreadsheet
     """
-    EMPLOYEES.drop()
-    employee = transform_to_dict_list(get_sheet_data(sheetname='employee', datarange='A:M'))
-    EMPLOYEES.insert_many(employee)
+    try:
+        employee = transform_to_dict_list(get_sheet_data(sheetname='employee', datarange='A:M'))
+        if employee:
+            EMPLOYEES.drop()
+            EMPLOYEES.insert_many(employee)
+    except:
+        print("EMPLOYEES Database couldn't be updated")
 
 
 def update_employers():
@@ -31,9 +35,13 @@ def update_employers():
     update DB with the spreadsheet
 
     """
-    EMPLOYERS.drop()
-    employer = transform_to_dict_list(get_sheet_data(sheetname='employer', datarange='A:M'))
-    EMPLOYERS.insert_many(employer)
+    try:
+        employer = transform_to_dict_list(get_sheet_data(sheetname='employer', datarange='A:M'))
+        if employer:
+            EMPLOYERS.drop()
+            EMPLOYERS.insert_many(employer)
+    except:
+        print("EMPLOYERS Database couldn't be updated")
 
 
 def get_employees(employee_id=None):
