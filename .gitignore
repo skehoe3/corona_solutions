@@ -1,6 +1,4 @@
 venv
 *.pyc
-*.csv
-test.py
 config/token.pickle
 .vscode
