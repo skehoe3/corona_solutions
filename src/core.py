@@ -9,10 +9,14 @@ from geopy import distance
 from geopy.geocoders import Nominatim, get_geocoder_for_service
 import numpy as np
 from src.spreadsheet import get_sheet_data, transform_to_dict_list
+from dateutil import parser
+
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
+
 offers = pd.read_csv("employee.csv", sep=",")
+
 SKILLS = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 
 #pandas settings
@@ -89,7 +93,7 @@ def compare_lists(a, b):
     return c
 
 
-def find_matches(employee_id=None, employer_id=None):
+def find_matches(employee_id=None):
     """finds matches for skills needed and skills on offer
     
     Args:
@@ -98,35 +102,28 @@ def find_matches(employee_id=None, employer_id=None):
         employee_matches: which employers each employee matches with
         employer_matches: which employeees each employer matches with
     """
-    #d = {'test': ['Re-Stock shelves', '2', "3"] }
-    # do this for everthing in the incoming arrays
-    #result = {x: 1 if x in d['test'] else 0 for x in SKILLS }
 
     #
     employers = get_employers()
-    employees = get_employees()
+    employees = get_employees(employee_id)[0]
 
     # only employees can list more than one skill, so no need for a second loop
     # for employers
-    for i in range(0, len(employees)): #this is a list
-        employees[i]["Skills"] = employees[i]["Skills"].split(', ')
+    employees["Skills"] = employees["Skills"].split(', ')
     
-    employer_matches = []
-    for i in range(0, len(employers)):
-        #convert timestamp of employer
-        er_from = employers[i]['From']
-        er_to = employers[i]['To']
-        for x in range(0, len(employees)):
-            ee_from = employees[x]['From']
-            ee_to = employees[x]['To']
-            print(type(ee_to))
-            if employers[i]['Skills'] in employees[x]["Skills"] and employers[i]['Zip Code'] == employees[i]['Zip Code']:
-                # convert timestamp of employee
-            # collection section
-                employer_matches.append([employers[i]['Email'], employees[x]['First Name'], employees[x]['Last Name'], employees[x]['Email'], employees[x]['Phone number'], employees[x]['Skills', employees[x]['Availability']]])
-                #TODO: add time match component
+    ee_from = parser.parse(employees['From'])
+    ee_to = parser.parse(employees['To'])
 
-            #{'email_employer': {firstname: "", lastname: "", email:'', phone:'', skills: '', availability:''}}
+    employer_matches = []
+    for i, employer in enumerate(employers):
+
+        er_from = parser.parse(employer['From'])
+        er_to = parser.parse(employer['To'])
+
+        if employer['Skills'] in employees["Skills"] and employer['Zip Code'] == employees['Zip Code'] and er_from >= ee_from and er_to <= ee_to:
+                employer_matches.append({'Employer Email': employer['Email'], 'First Name':employer['First Name'], 'Last Name':employer['Last Name'], 'Phone Number':employer['Phone number'], 'Skills':employer['Skills'], 'To': str(er_to), 'From': str(er_from)})
+        
+            
     return employer_matches
 
 
