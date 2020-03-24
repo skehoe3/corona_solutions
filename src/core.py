@@ -23,25 +23,6 @@ SKILLS = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am
 pd.set_option('display.max_columns', None)  # or 1000
 pd.set_option('display.max_rows', None)  # or 1000
 
-def get_offers(offer_id=None):
-    """
-    returns all offers or a specific one
-
-    Args:
-        offer_id (str): id of the offer
-
-    Returns:
-        requested offers
-    """
-    
-    if offer_id:
-        filtered = offers[offers['email']== offer_id]
-        html_table = filtered.to_html()
-        return html_table
-    html_table = offers.to_html()
-    return html_table
-    
-
 def create_offer(offer):
     """
     creates an offer
