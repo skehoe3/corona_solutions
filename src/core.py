@@ -14,9 +14,6 @@ from dateutil import parser
 
 # Just for my test
 TEST = ["Offer 1", "Offer 2"]
-
-offers = pd.read_csv("employee.csv", sep=",")
-
 SKILLS = ["Re-Stock shelves", "Lift heavy objects (boxes)", "Deliver goods (i am willing to use my car)", "Work with office programs", "Accounting",  "Look after someone", "Psychological assistance", "Entrance security"]
 
 #pandas settings
