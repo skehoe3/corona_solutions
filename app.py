@@ -76,7 +76,7 @@ def employees(employee_id=None):
     if request.method == "GET":
         if employee_id:
             return jsonify(Core.get_employees(employee_id))
-        return render_template("employee.html")
+        return render_template("helper.html")
 
 
 @app.route("/employers", methods=["GET", "POST"])
